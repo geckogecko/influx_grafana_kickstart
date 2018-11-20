@@ -69,7 +69,7 @@ def main(argv):
         w = getWeatherDetailsAtCords(owm, 48.016686, 13.487734)
         sendWindData(w.get_wind()['speed'], w.get_wind()['deg'], client)
         sendHumidityData(w.get_humidity(), client)
-        sendTemperatureData(w.get_temperature('celsius')['temp'], w.get_temperature('celsius')['temp_max'], w.get_temperature('celsius')['temp_min'])
+        sendTemperatureData(w.get_temperature('celsius')['temp'], w.get_temperature('celsius')['temp_max'], w.get_temperature('celsius')['temp_min'], client)
         time.sleep(60)
 
 if __name__ == "__main__":
