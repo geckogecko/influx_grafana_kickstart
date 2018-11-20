@@ -1,0 +1,9 @@
+#OpenWeatherMap
+python lib: https://github.com/csparpa/pyowm
+
+pip install pyowm
+
+#python-influxdb
+pythong lib: https://github.com/influxdata/influxdb-python
+
+pip install influxdb
