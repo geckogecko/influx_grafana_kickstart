@@ -165,15 +165,16 @@ def main(argv):
 
     while True:
         w = getWeatherDetailsAtCords(owm, 48.016686, 13.487734)
-        print(w.get_wind())
 
         if 'speed' in w.get_wind() and 'deg' in w.get_wind():
             sendWindData(w.get_wind()['speed'], w.get_wind()['deg'], client)
         
         sendHumidityData(w.get_humidity(), client)
         sendTemperatureData(w.get_temperature('celsius')['temp'], w.get_temperature('celsius')['temp_max'], w.get_temperature('celsius')['temp_min'], client)
-        sendRainData(w.get_rain()['1h'], w.get_rain()['3h'], client)
-        sendSnowData(w.get_snow()['1h'], w.get_snow()['3h'], client)
+        
+        #sendRainData(w.get_rain()['1h'], w.get_rain()['3h'], client)
+        #sendSnowData(w.get_snow()['1h'], w.get_snow()['3h'], client)
+        
         sendCloudData(w.get_clouds(),client)
         sendHeatIndexData(w.get_heat_index(),client)
         sendPreasureData(w.get_pressure()['press'], client)
