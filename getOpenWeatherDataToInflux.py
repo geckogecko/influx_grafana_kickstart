@@ -1,6 +1,6 @@
 import pyowm
 from influxdb import InfluxDBClient
-
+import time
 import sys
 
 
@@ -65,11 +65,12 @@ def main(argv):
     owm = pyowm.OWM('76b37d4118ddc94a41b2344a4b2dc84a') #openWeatherApiKey
     client = InfluxDBClient('localhost', 8086, 'root', 'root', 'weather_data')
 
-    while(True):
+    while True:
         w = getWeatherDetailsAtCords(owm, 48.016686, 13.487734)
         sendWindData(w.get_wind()['speed'], w.get_wind()['deg'], client)
         sendHumidityData(w.get_humidity(), client)
         sendTemperatureData(w.get_temperature('celsius')['temp'], w.get_temperature('celsius')['temp_max'], w.get_temperature('celsius')['temp_min'])
+        time.sleep(60)
 
 if __name__ == "__main__":
     main(sys.argv)
