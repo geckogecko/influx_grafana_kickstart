@@ -176,7 +176,10 @@ def main(argv):
         #sendSnowData(w.get_snow()['1h'], w.get_snow()['3h'], client)
         
         sendCloudData(w.get_clouds(),client)
-        sendHeatIndexData(w.get_heat_index(),client)
+
+        if w.get_heat_index() is not None:
+            sendHeatIndexData(w.get_heat_index(),client)
+            
         sendPreasureData(w.get_pressure()['press'], client)
         sendVisibleDistanceData(w.get_visibility_distance(), client)
         time.sleep(60)
