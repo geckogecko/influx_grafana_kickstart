@@ -10,30 +10,36 @@ def getWeatherDetailsAtCords(owm, lat, lng):
 
 def sendDictToInflux(dict, client):
     if dict:
-        json_body = {
-            "measurement": "open_weather_data",
-            "tags": {
-                "location": "home",
-            },
-            "fields": {}
-        }
+        json_body = [
+            {
+                "measurement": "open_weather_data",
+                "tags": {
+                    "location": "home"
+                },
+                "fields": {}
+            }
+        ]
 
         for key, value in dict.iteritems():
-            json_body['fields'][key] = value
+            json_body[0]['fields'][key] = value
 
+        print(json_body)
         client.write_points(json_body)
 
 def sendToInflux(dataName, value, client):
      if value is not None:
-        json_body = {
-            "measurement": "open_weather_data",
-            "tags": {
-                "location": "home",
-            },
-            "fields": {
-                dataName: value
+        json_body = [
+            {
+                "measurement": "open_weather_data",
+                "tags": {
+                    "location": "home"
+                },
+                "fields": {
+                    dataName: value
+                }
             }
-        }
+        ]
+
 
         client.write_points(json_body)
 
