@@ -33,7 +33,7 @@ def createInfluxRequest(dataName, value):
 
         if isInstance(value, int) or isInstance(value, float):
             json_body['fields'] = float(value)
-        elif:
+        else:
             json_body['fields'] = value
     return json_body
 
