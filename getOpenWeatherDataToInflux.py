@@ -28,10 +28,13 @@ def createInfluxRequest(dataName, value):
             "tags": {
                 "location": "home"
             },
-            "fields": {
-                dataName: value
-            }
+            "fields": {}
         }
+
+        if isInstance(value, int) or isInstance(value, float):
+            json_body['fields'] = float(value)
+        elif:
+            json_body['fields'] = value
     return json_body
 
 def main(argv):
