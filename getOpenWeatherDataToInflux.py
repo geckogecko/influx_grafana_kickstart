@@ -23,7 +23,6 @@ def sendDictToInflux(dict, client):
         for key, value in dict.iteritems():
             json_body[0]['fields'][key] = value
 
-        print(json_body)
         client.write_points(json_body)
 
 def sendToInflux(dataName, value, client):
