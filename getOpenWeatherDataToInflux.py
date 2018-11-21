@@ -47,7 +47,7 @@ def main(argv):
     client = InfluxDBClient('localhost', 8086, 'root', 'root', 'weather_data')
 
     while True:
-        #time.sleep(120)
+        time.sleep(120)
 
         #get the weather data from openweathermap
         w = owm.weather_at_coords(48.016686, 13.487734).get_weather()
