@@ -16,7 +16,7 @@ def createInfluxRequestFromDict(dict):
 
         for key, value in dict.iteritems():
             if value is not None:
-                json_body['fields'][key] = value
+                json_body['fields'][key] = manipulateValue(value)
 
     return json_body
 
@@ -28,21 +28,26 @@ def createInfluxRequest(dataName, value):
             "tags": {
                 "location": "home"
             },
-            "fields": {}
+            "fields": {
+                dataName: manipulateValue(value)
+            }
         }
-
-        if isInstance(value, int) or isInstance(value, float):
-            json_body['fields'] = float(value)
-        else:
-            json_body['fields'] = value
     return json_body
+
+#int -> float
+#float -> float
+#string -> string
+def manipulateValue(value):
+    if isinstance(value, int) or isinstance(value, float):
+        return float(value)
+    return value
 
 def main(argv):
     owm = pyowm.OWM('76b37d4118ddc94a41b2344a4b2dc84a') #openWeatherApiKey
     client = InfluxDBClient('localhost', 8086, 'root', 'root', 'weather_data')
 
     while True:
-        time.sleep(120)
+        #time.sleep(120)
 
         #get the weather data from openweathermap
         w = owm.weather_at_coords(48.016686, 13.487734).get_weather()
