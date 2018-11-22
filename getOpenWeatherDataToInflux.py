@@ -47,31 +47,34 @@ def main(argv):
     client = InfluxDBClient('localhost', 8086, 'root', 'root', 'weather_data')
 
     while True:
-        time.sleep(120)
+        try:
+            time.sleep(300)
 
-        #get the weather data from openweathermap
-        w = owm.weather_at_coords(48.016686, 13.487734).get_weather()
-        uv = owm.uvindex_around_coords(48.016686, 13.487734)
+            #get the weather data from openweathermap
+            w = owm.weather_at_coords(48.016686, 13.487734).get_weather()
+            uv = owm.uvindex_around_coords(48.016686, 13.487734)
 
-        requests = []
+            requests = []
 
-        requests.append(createInfluxRequestFromDict(w.get_wind()))
-        requests.append(createInfluxRequestFromDict(w.get_temperature('celsius')))
-        requests.append(createInfluxRequestFromDict(w.get_rain()))
-        requests.append(createInfluxRequestFromDict(w.get_snow()))
-        requests.append(createInfluxRequestFromDict(w.get_pressure()))
-        
-        requests.append(createInfluxRequest('hum', w.get_humidity()))
-        requests.append(createInfluxRequest('clouds', w.get_clouds()))
-        requests.append(createInfluxRequest('heat_index', w.get_heat_index()))
-        requests.append(createInfluxRequest('visible_distance', w.get_visibility_distance()))
-        requests.append(createInfluxRequest('uv_index', uv.get_value()))
+            requests.append(createInfluxRequestFromDict(w.get_wind()))
+            requests.append(createInfluxRequestFromDict(w.get_temperature('celsius')))
+            requests.append(createInfluxRequestFromDict(w.get_rain()))
+            requests.append(createInfluxRequestFromDict(w.get_snow()))
+            requests.append(createInfluxRequestFromDict(w.get_pressure()))
+            
+            requests.append(createInfluxRequest('hum', w.get_humidity()))
+            requests.append(createInfluxRequest('clouds', w.get_clouds()))
+            requests.append(createInfluxRequest('heat_index', w.get_heat_index()))
+            requests.append(createInfluxRequest('visible_distance', w.get_visibility_distance()))
+            requests.append(createInfluxRequest('uv_index', uv.get_value()))
 
-        #remove the empty requests
-        requests = filter(None, requests)
+            #remove the empty requests
+            requests = filter(None, requests)
 
-        #send to influxdb
-        client.write_points(requests)
+            #send to influxdb
+            client.write_points(requests)
+        except Exception as e:
+            print(str(e))
     
 
 if __name__ == "__main__":
