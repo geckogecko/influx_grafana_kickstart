@@ -44,19 +44,18 @@ def manipulateValue(value):
     return value
 
 def main(argv):
-	sensor = Adafruit_DHT.DHT11
+	sensor = Adafruit_DHT.DHT22
 	pin = 4
 	client = InfluxDBClient('93.90.200.187', 8086, 'root', 'root', 'temp_data')
 
 	while True:
 		try:
-			time.sleep(300)
+			time.sleep(30)
 			#get the data from dht22
 			humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 			
 			#send to influxdb
 			requests = []
-
 			requests.append(createInfluxRequest('hum', humidity))
 			requests.append(createInfluxRequest('temp', temperature))
 			client.write_points(requests)
